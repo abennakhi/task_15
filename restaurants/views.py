@@ -4,6 +4,8 @@ from .forms import RestaurantForm, ItemForm, SignupForm, SigninForm
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
 from django.db.models import Q
+from rest_framework.generics import RetrieveAPIView
+from .serializers import RestaurantDetailSerializer
 
 def restaurant_favorite(request, restaurant_id):
     restaurant_obj = Restaurant.objects.get(id=restaurant_id)
@@ -102,6 +104,12 @@ def restaurant_detail(request, restaurant_id):
         "items": items,
     }
     return render(request, 'detail.html', context)
+
+# def restaurant_detail(RetrieveAPIView):
+#     queryset = Restaurant.objects.all()
+#     serializer_class = RestaurantDetailSerializer
+#     lookup_field = 'id'
+#     lookup_url_kwarg = restaurant_id
 
 def restaurant_create(request):
     if request.user.is_anonymous:
